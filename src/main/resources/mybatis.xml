@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="User" type="com.casit.entity.PO.User" />
+		<typeAlias alias="ShipAddress"
+			type="com.casit.entity.PO.ShipAddress" />
+		<typeAlias alias="Role" type="com.casit.entity.PO.Role" />
+	</typeAliases>
+<!--
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<property name="dialect" value="mysql" />
+		</plugin>
+	</plugins>
+-->
+</configuration>

@@ -1,0 +1,84 @@
+server:
+  port: 8080
+management :
+  port: 9091
+
+spring:
+    datasource:
+        name: developeDB
+        url: jdbc:mysql://localhost:3306/test?useSSL=false
+        username: root
+        password: 123456
+        #
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+    rabbitmq: 
+        host: localhost
+        port: 5672
+        username: admin
+        password: admin
+        publisherConfirms: true              # 开启发送确认  
+        publisherReturns: true               # 开启发送失败退回  
+        virtual-host: /
+        listener:                            # 开启ACK  
+            direct:
+                acknowledge-mode: manual
+            simple:
+                acknowledge-mode: manual
+    application :
+        name : dubbo-provider-demo
+
+dubbo :
+    application:
+        id: dubbo-provider-demo
+        name: dubbo-provider-demo
+    scan:
+        basePackages : com.casit.service.impl
+    protocol :
+        id : dubbo
+        name : dubbo
+        port : 12345
+        status: server
+        threads: 10
+        server: netty4
+    registry :
+        id : my-registry
+        protocol: zookeeper
+        address: localhost:2181
+        client: curator
+        timeout: 30000
+        
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.casit.entity.PO
+  config-location: classpath:mybatis.xml
+
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+    
+redis:
+    host: 127.0.0.1
+    port: 6379
+    pool:
+      max-active: 8
+      max-wait: 1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0    

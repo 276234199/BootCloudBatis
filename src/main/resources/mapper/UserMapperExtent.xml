@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.casit.dao.UserMapperExtent">
+
+	<resultMap id="ShipAddressMap" type="ShipAddress">
+		<id column="address_id" jdbcType="INTEGER" property="addressId" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+	</resultMap>
+
+	<resultMap id="RoleMap" type="Role">
+		<id column="role_id" jdbcType="INTEGER" property="roleId" />
+		<result column="role_name" jdbcType="VARCHAR"
+			property="roleName" />
+	</resultMap>
+
+	<resultMap id="ComplexUserMap" type="User">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="age" jdbcType="INTEGER" property="userage" />
+		<result column="username" jdbcType="VARCHAR"
+			property="username" />
+		<result column="password" jdbcType="VARCHAR"
+			property="password" />
+		<result column="aaa" jdbcType="VARCHAR" property="aaa" />
+		<collection property="adds" ofType="ShipAddress"
+			resultMap="ShipAddressMap"></collection>
+		<collection property="roles" ofType="Role"
+			resultMap="RoleMap"></collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, age, username, password
+	</sql>
+
+
+	<select id="login" resultMap="ComplexUserMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_user where
+		username = #{username} and password = #{password}
+	</select>
+
+
+	<select id="getUserByUsername" parameterType="String"
+		resultMap="ComplexUserMap">
+		select
+		U.id, U.age,
+		U.username,U.password,S.address_id,S.address,R.role_id,R.role_name
+		from
+		t_user U
+		left outer join t_shipaddress S on U.id = S.user_id
+		left
+		outer join t_user_role UR on UR.user_id = U.id
+		left outer join t_role R
+		on R.role_id = UR.role_id
+		<where>
+			<if test="username!=null">
+				username = #{username}
+			</if>
+		</where>
+	</select>
+
+	<select id="getUsersWithPageHelper" resultMap="ComplexUserMap">
+		select
+		U.id,
+		U.age,U.username,U.password
+		from
+		t_user U
+	</select>
+
+	<select id="getUsersWithPageNesting" resultMap="ComplexUserMap">
+		select
+		U.id,U.username,S.address
+		from
+		(SELECT * FROM t_user t where
+		t.id>=(SELECT id FROM t_user limit #{offset},1) limit #{limit} ) U
+		left
+		outer join t_shipaddress S on U.id = S.user_id
+	</select>
+
+
+	<select id="getUsersCountWithNesting" resultType="Integer">
+		select
+		count(1)
+		from
+		t_user
+	</select>
+	
+  <update id="updateByid" parameterType="User">
+    update t_user
+    set age = #{userage,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+	<insert id="insert" parameterType="User">
+
+		insert into t_user (age, username, password)
+		values
+		(#{userage,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<delete id="deleteUserByID"
+		parameterType="java.lang.Integer">
+		delete from t_user where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<select id="getSingleUserByid" parameterType="Integer"
+		resultMap="ComplexUserMap">
+		select
+		U.id, U.age,
+		U.username,U.password,S.address_id,S.address,R.role_id,R.role_name
+		from
+		t_user U
+		left outer join t_shipaddress S on U.id = S.user_id
+		left
+		outer join t_user_role UR on UR.user_id = U.id
+		left outer join t_role R
+		on R.role_id = UR.role_id
+		<where>
+			<if test="id!=null">
+				id = #{id}
+			</if>
+		</where>
+	</select>
+
+</mapper>
