@@ -2,6 +2,7 @@ package com.casit.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,7 @@ import com.casit.entity.PO.User;
 import com.casit.service.RabbitmqService;
 import com.casit.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -112,6 +114,17 @@ public class TestController {
 		list.add(1);
 		list.add(2);
 		list.add(3);
+		ObjectMapper mapper = new ObjectMapper();
+
+		return mapper.writeValueAsString(list);
+	}
+	
+	@RequestMapping(value = "/getUsers.do")
+	@ApiOperation(httpMethod = "GET", value = "getUsers")
+	public String getUsers(int page ,int pagesize) throws Exception {
+		
+		PageInfo<User> list = userService.getUsersWithPageHelper(page, pagesize);
+
 		ObjectMapper mapper = new ObjectMapper();
 
 		return mapper.writeValueAsString(list);

@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
 	<context id="context" targetRuntime="MyBatis3">
 
 		<property name="javaFileEncoding" value="UTF-8" />
-		<!--使用maven构建时候 -使用plugin时， 需将类注册到maven中- 本XML文档有中文注释时，可能会出现问题， -->
-
-		<!--强制覆盖插件 -->
-		<!-- <plugin type="com.casit.mybatis.generator.OverIsMergeablePlugin" /> -->
-
-		<!--一对多插件 -->
-		<!-- <plugin type="cc.bandaotixi.plugins.OneToManyPlugin" /> -->
-
-		<!--MYSQL 分页插件 -->
-		<!-- <plugin type="com.casit.mybatis.generator.MySQLLimitPlugin" /> -->
 
 		<commentGenerator
 			type="com.casit.myBatisGen.CommentGenerator">
@@ -42,20 +34,32 @@
 			targetProject="src/main/java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
-		<!-- <table tableName="t_user" domainObjectName="User" enableCountByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample=""false"" enableUpdateByExample="false"> 
-			<generatedKey column="id" sqlStatement="mysql" identity="true" /> <columnOverride 
-			column="age" property="userage" javaType="java.lang.Integer" jdbcType="INTEGER" 
-			/> </table> -->
-		<!-- <table tableName="t_role" domainObjectName="Role" enableCountByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"> 
-			<generatedKey column="role_id" sqlStatement="mysql" identity="true" /> </table> -->
+		<!--表名故意错误的 t_user -->
+		<table tableName="t_user22" domainObjectName="User"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="id" sqlStatement="mysql"
+				identity="true" />
+			<columnOverride column="age" property="userage"
+				javaType="java.lang.Integer" jdbcType="INTEGER" />
+		</table>
+		
+		<table tableName="t_role22" domainObjectName="Role"
+			enableCountByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="role_id" sqlStatement="mysql"
+				identity="true" />
+		</table>
 
-		<!-- <table tableName="t_shipaddress" domainObjectName="ShipAddress" enableCountByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"> 
-			<generatedKey column="address_id" sqlStatement="mysql" identity="true" /> 
-			<columnOverride column="user_id" property="user" javaType="com.casit.entity.PO.User" 
-			jdbcType="INTEGER" /> </table> -->
+		<table tableName="t_shipaddress22"
+			domainObjectName="ShipAddress" enableCountByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false">
+			<generatedKey column="address_id" sqlStatement="mysql"
+				identity="true" />
+			<columnOverride column="user_id" property="user"
+				javaType="com.casit.entity.PO.User" jdbcType="INTEGER" />
+		</table>
 		<!-- <ignoreColumn column="asd" /> -->
 
 	</context>

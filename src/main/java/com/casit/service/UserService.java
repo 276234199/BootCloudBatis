@@ -1,6 +1,9 @@
 package com.casit.service;
 
+import java.util.List;
+
 import com.casit.entity.PO.User;
+import com.github.pagehelper.PageInfo;
 
 public interface UserService {
 	
@@ -13,5 +16,8 @@ public interface UserService {
 	User getUser(Integer id);
 
 	User updateUser(User user);
+
+
+	PageInfo<User> getUsersWithPageHelper(int page, int pagesize);
 
 }

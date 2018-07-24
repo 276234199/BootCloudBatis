@@ -44,14 +44,10 @@
 		resultMap="ComplexUserMap">
 		select
 		U.id, U.age,
-		U.username,U.password,S.address_id,S.address,R.role_id,R.role_name
+		U.username,U.password
 		from
 		t_user U
-		left outer join t_shipaddress S on U.id = S.user_id
-		left
-		outer join t_user_role UR on UR.user_id = U.id
-		left outer join t_role R
-		on R.role_id = UR.role_id
+		
 		<where>
 			<if test="username!=null">
 				username = #{username}
@@ -61,8 +57,8 @@
 
 	<select id="getUsersWithPageHelper" resultMap="ComplexUserMap">
 		select
-		U.id,
-		U.age,U.username,U.password
+		U.id, U.age,
+		U.username,U.password
 		from
 		t_user U
 	</select>

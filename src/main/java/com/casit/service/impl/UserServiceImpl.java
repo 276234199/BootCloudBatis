@@ -24,6 +24,7 @@ import com.casit.entity.PO.ShipAddress;
 import com.casit.entity.PO.User;
 import com.casit.service.UserService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Service("userService")
 @com.alibaba.dubbo.config.annotation.Service(
@@ -96,6 +97,14 @@ public class UserServiceImpl implements UserService {
 		
 
 		return result;
+	}
+	
+	@Override
+	public PageInfo<User> getUsersWithPageHelper(int page ,int pagesize){
+		PageHelper.startPage(page,pagesize);
+		List<User> users1 = userMapperExtent.getUsersWithPageHelper();
+		PageInfo<User> pageinfo = new PageInfo<User>(users1);
+		return pageinfo;
 	}
 
 	
