@@ -1,13 +1,14 @@
 package com.casit.thread;
 
-public class TestSyco3  implements Runnable {
+public class Syco3Test  implements Runnable {
 	
     private static int count = 0;
 
     public static void main(String[] args) {
-    	TestSyco3 runnableItem = new TestSyco3();
+//    	TestSyco3 runnableItem = new TestSyco3();
         for (int i = 0; i < 10; i++) {
-            Thread thread = new Thread( new TestSyco3());
+            Thread thread = new Thread( new Syco3Test());
+//        	Thread thread = new Thread(runnableItem);
             thread.start();
         }
         try {
@@ -21,7 +22,7 @@ public class TestSyco3  implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 10000; i++) {
-        	synchronized(TestSyco3.class) {
+        	synchronized(Syco3Test.class) {
         		count++;
         	}
         }

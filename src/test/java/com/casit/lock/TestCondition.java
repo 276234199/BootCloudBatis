@@ -10,9 +10,11 @@ public class TestCondition {
     private static Condition condition = lock.newCondition();
     private static volatile boolean flag = false;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Thread waiter = new Thread(new waiter());
         waiter.start();
+        
+        
         Thread signaler = new Thread(new signaler());
         signaler.start();
     }

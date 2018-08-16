@@ -1,6 +1,6 @@
 package com.casit.thread;
 
-public class TestRunnable implements Runnable {
+public class RunnableTest implements Runnable {
 
 	private String flag;
 
@@ -8,7 +8,7 @@ public class TestRunnable implements Runnable {
 
 	private byte[] lock = new byte[0];
 
-	public TestRunnable(String flag) {
+	public RunnableTest(String flag) {
 		super();
 		this.flag = flag;
 

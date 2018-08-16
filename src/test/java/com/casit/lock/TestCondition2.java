@@ -19,8 +19,8 @@ public class TestCondition2 {
 		producer.start();
 		consumer.start();
 		Thread.sleep(1);
-		producer.interrupt();
-		consumer.interrupt();
+//		producer.interrupt();
+//		consumer.interrupt();
 	}
 
 	class Consumer extends Thread {

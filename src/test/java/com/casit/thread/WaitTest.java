@@ -1,6 +1,6 @@
 package com.casit.thread;
 
-public class TestWait {
+public class WaitTest {
 
 	public static void main(String[] args) throws InterruptedException {
 		ThreadB b = new ThreadB();

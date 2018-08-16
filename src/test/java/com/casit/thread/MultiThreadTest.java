@@ -1,10 +1,10 @@
 package com.casit.thread;
 
 
-public class TestMultiThread {
+public class MultiThreadTest {
 	public static void main(String[] args) throws InterruptedException {
 
-		TestRunnable runnable = new TestRunnable("ff");
+		RunnableTest runnable = new RunnableTest("ff");
 		
 		Thread ee = new Thread(runnable);
 		Thread ff = new Thread(runnable);

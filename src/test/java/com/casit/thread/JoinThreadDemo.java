@@ -1,5 +1,8 @@
 package com.casit.thread;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 public class JoinThreadDemo {
 	public static void main(String[] args) throws InterruptedException {
 		
@@ -36,6 +39,7 @@ public class JoinThreadDemo {
 			}
 		});
 		
+//		TimeUnit.SECONDS.sleep(1);
 		
 		t2.start();
 		t2.join(6000);

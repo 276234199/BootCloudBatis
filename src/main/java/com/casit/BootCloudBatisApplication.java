@@ -1,5 +1,7 @@
 package com.casit;
 
+import javax.annotation.Resource;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -34,10 +36,18 @@ public class BootCloudBatisApplication {
 	@Autowired
 	public UserService userService;
 	
+	@Resource(name = "testUser")
+	public User user;
+	
+	@Autowired
+	public User testUser;
+	
 	@Test
 	public void testSth() {
 		User u = userService.createUser("rua", "ruarurua");
 		System.out.println(u.getId()+"----------------------------");
+		System.out.println(testUser.getId()+"----------------------------");
+		System.out.println(user.getId()+"----------------------------");
 	}
 
 	

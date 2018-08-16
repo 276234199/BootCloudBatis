@@ -2,7 +2,7 @@ package com.casit.thread;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class TestWaitNotify2 {
+public class WaitNotify2Test {
 
     // 在多线程间共享的对象上使用wait  
 	//---原子类--
@@ -11,7 +11,7 @@ public class TestWaitNotify2 {
     //private  Boolean shareObj = new true;
 
     public static void main(String[] args) {
-    	TestWaitNotify2 test = new TestWaitNotify2();
+    	WaitNotify2Test test = new WaitNotify2Test();
         ThreadWait threadWait1 = test.new ThreadWait("wait thread1");
         threadWait1.setPriority(2);
         ThreadWait threadWait2 = test.new ThreadWait("wait thread2");

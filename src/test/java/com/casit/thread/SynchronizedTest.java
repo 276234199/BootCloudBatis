@@ -1,9 +1,9 @@
 package com.casit.thread;
 
-public class TestSynchronized {
+public class SynchronizedTest {
 
 	public static void main(String args[]) {
-		MyObject object = new MyObject();
+        MyObject object = new MyObject();
 		MyObject object2 = new MyObject();
 		
 //对象锁object---------------------------------------------------------------------
