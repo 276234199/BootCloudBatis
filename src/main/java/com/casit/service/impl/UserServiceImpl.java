@@ -2,6 +2,7 @@ package com.casit.service.impl;
 
 
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -150,6 +153,19 @@ public class UserServiceImpl implements UserService {
 	public User updateUser(User user) {
 		userMapperExtent.updateByid(user);
 		return userMapperExtent.getSingleUserByid(user.getId());
+	}
+
+	@Override
+	@Async
+	public Future<String> testAsync() {
+		System.out.println(Thread.currentThread() + "————Async————begin");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread() + "———Async—————end");
+		return new AsyncResult<String>("task1执行完毕");
 	}
 	
 

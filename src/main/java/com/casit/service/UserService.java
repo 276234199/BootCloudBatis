@@ -1,6 +1,7 @@
 package com.casit.service;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 import com.casit.entity.PO.User;
 import com.github.pagehelper.PageInfo;
@@ -19,5 +20,7 @@ public interface UserService {
 
 
 	PageInfo<User> getUsersWithPageHelper(int page, int pagesize);
+
+	Future<String> testAsync();
 
 }

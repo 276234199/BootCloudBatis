@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +32,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping(value = "/hello")
 @Api(value = "测试", tags = "测试")
+@EnableAsync
 public class TestController {
 
 	private static Logger logger = LogManager.getLogger(TestController.class.getName());
@@ -128,5 +131,16 @@ public class TestController {
 		ObjectMapper mapper = new ObjectMapper();
 
 		return mapper.writeValueAsString(list);
+	}
+	
+	@RequestMapping(value = "/testAsync.do")
+	public String testAsync() throws Exception {
+
+		
+		System.out.println(Thread.currentThread() + "———tomcat pool—————begin");
+		System.out.println(Thread.currentThread() + "———tomcat pool—————end");
+
+		return userService.testAsync().get();
+		
 	}
 }
