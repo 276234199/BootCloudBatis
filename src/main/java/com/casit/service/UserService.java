@@ -21,6 +21,6 @@ public interface UserService {
 
 	PageInfo<User> getUsersWithPageHelper(int page, int pagesize);
 
-	Future<String> testAsync();
+	Future<String> testAsync() throws InterruptedException;
 
 }

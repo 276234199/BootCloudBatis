@@ -32,7 +32,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping(value = "/hello")
 @Api(value = "测试", tags = "测试")
-@EnableAsync
 public class TestController {
 
 	private static Logger logger = LogManager.getLogger(TestController.class.getName());
@@ -132,13 +131,13 @@ public class TestController {
 
 		return mapper.writeValueAsString(list);
 	}
-	
+	//使用异步调用副线程 可以提高tomcat并发量
 	@RequestMapping(value = "/testAsync.do")
 	public String testAsync() throws Exception {
 
 		
-		System.out.println(Thread.currentThread() + "———tomcat pool—————begin");
-		System.out.println(Thread.currentThread() + "———tomcat pool—————end");
+		System.out.println(Thread.currentThread() + "———main主线程—————begin");
+		System.out.println(Thread.currentThread() + "———main主线程—————end");
 
 		return userService.testAsync().get();
 		

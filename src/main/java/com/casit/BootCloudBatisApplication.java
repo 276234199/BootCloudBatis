@@ -12,6 +12,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.repository.cdi.Eager;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -24,6 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableTransactionManagement // 事务
 @EnableCaching // redis
+@EnableAsync // 异步请求
 @MapperScan("com.casit.dao")  //mybatis mapper
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = BootCloudBatisApplication.class)

@@ -3,6 +3,7 @@ package com.casit.service.impl;
 
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,14 +158,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Async
-	public Future<String> testAsync() {
-		System.out.println(Thread.currentThread() + "————Async————begin");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println(Thread.currentThread() + "———Async—————end");
+	public Future<String> testAsync() throws InterruptedException {
+		System.out.println(Thread.currentThread() + "————Async副线程————begin");
+		Thread.sleep(2000);
+		System.out.println(Thread.currentThread() + "———Async副线程—————end");
 		return new AsyncResult<String>("task1执行完毕");
 	}
 	

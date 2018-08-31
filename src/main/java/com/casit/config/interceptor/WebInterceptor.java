@@ -10,8 +10,7 @@ public class WebInterceptor implements HandlerInterceptor{
 
 	@Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-		System.out.println("==============  request  Intercepted?==============");
-		httpServletRequest.getContextPath();
+		System.out.println("==============  request  Intercepted=============="+httpServletRequest.getRequestURI());
         return true;
     }
 
