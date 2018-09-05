@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 设置关联对象加载的形态,此处为按需加载字段(加载字段由SQL指定),不会加载关联表的所有字段,以提高性能 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<!-- 打印查询语句 -->
+		<setting name="logImpl"
+			value="org.apache.ibatis.logging.stdout.StdOutImpl" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="User" type="com.casit.entity.PO.User" />
+		<typeAlias alias="ShipAddress"
+			type="com.casit.entity.PO.ShipAddress" />
+		<typeAlias alias="Role" type="com.casit.entity.PO.Role" />
+	</typeAliases>
+
+	<!--配置environment环境 -->
+	<environments default="development">
+		<!-- 环境配置1，每个SqlSessionFactory对应一个环境 -->
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/test?useSSL=false" />
+				<property name="username" value="root" />
+				<property name="password" value="123456" />
+			</dataSource>
+		</environment>
+
+	</environments>
+
+	<mappers>
+		<mapper resource="mapper/UserMapper2.xml" />
+		<mapper resource="mapper/CorpMapper.xml" />
+ 		<mapper resource="mapper/ShipAddressMapper.xml" /> 
+ 		<mapper resource="mapper/RoleMapper.xml" /> 
+	</mappers>
+
+</configuration>

@@ -3,9 +3,6 @@ package com.casit.entity.PO;
 import java.io.Serializable;
 
 public class ShipAddress  implements Serializable{
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 199423499L;
     /**
      * 
@@ -78,4 +75,11 @@ public class ShipAddress  implements Serializable{
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
     }
+
+	@Override
+	public String toString() {
+		return "ShipAddress [addressId=" + addressId + ", user=" + user + ", address=" + address + "]";
+	}
+    
+    
 }

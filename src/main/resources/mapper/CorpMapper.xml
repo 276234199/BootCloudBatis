@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.casit.dao.CorpMapper">
+
+	<resultMap id="corpBaseMap" type="com.casit.entity.PO.Corp">
+		<id property="corpID" column="corp_id" />
+		<result property="corpName" column="corp_name" />
+	</resultMap>
+
+	<select id="getCorpByID" resultMap="corpBaseMap">
+		select * from t_corp where corp_id = #{id}
+	</select>
+
+</mapper>

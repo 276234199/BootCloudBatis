@@ -80,14 +80,14 @@ public class TestController {
 	@RequestMapping(value = "/get.do")
 	@ApiOperation(httpMethod = "GET", value = "getUser")
 	public String getUser(Integer id) throws Exception {
-		return userService.getUser(id).toJSON();
+		return userService.getUser(id).toJsonByGson();
 	}
 
 	// http://localhost:8080/hello/update.do
 	@RequestMapping(value = "/update.do")
 	@ApiIgnore
 	public String updateUser(User user) throws Exception {
-		return userService.updateUser(user).toJSON();
+		return userService.updateUser(user).toJsonByGson();
 	}
 
 	// http://localhost:8080/hello/sendToQueue.do

@@ -2,7 +2,7 @@ package com.casit.entity.PO;
 
 import java.io.Serializable;
 
-public class Role implements Serializable{
+public class Role  extends BaeEntity{
     /**
 	 * 
 	 */

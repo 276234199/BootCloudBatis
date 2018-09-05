@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.casit.dao.ShipAddressMapper;
 import com.casit.dao.ShipAddressMapperExtent;
-import com.casit.dao.UserMapper;
 import com.casit.dao.UserMapperExtent;
 import com.casit.entity.PO.ShipAddress;
 import com.casit.entity.PO.User;
@@ -42,8 +41,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public UserMapperExtent userMapperExtent;
 	
-	@Autowired
-	public UserMapper userMapper;
 	
 	@Autowired
 	public ShipAddressMapper shipAddressMapper;

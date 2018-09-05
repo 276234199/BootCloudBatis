@@ -18,18 +18,19 @@
 			connectionURL="jdbc:mysql://192.168.0.21:3306/test"
 			userId="developer" password="chenming" />
 
+<!--PO包 -->
 		<javaModelGenerator
 			targetPackage="com.casit.entity.PO" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 			<property name="comments" value="true" />
 		</javaModelGenerator>
-
+<!--xml mapper -->
 		<sqlMapGenerator targetPackage="mapper"
 			targetProject="src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
-
+<!--dao  -->
 		<javaClientGenerator targetPackage="com.casit.dao"
 			targetProject="src/main/java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />

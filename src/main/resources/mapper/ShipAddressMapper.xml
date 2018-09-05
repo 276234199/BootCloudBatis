@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.casit.dao.ShipAddressMapper">
+	<resultMap id="addressResultMap"
+		type="com.casit.entity.PO.ShipAddress">
+		<id column="address_id" jdbcType="INTEGER" property="addressId" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		address_id, address
+	</sql>
+	
+
+	<!-- 自定义 -->
+	<select id="selectByUserID" resultMap="addressResultMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_shipaddress
+		where
+		user_id = #{userid}
+	</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.casit.dao.UserMapper2">
+
+	<sql id="selectColumn">
+		id,age,username,password
+	</sql>
+
+	<resultMap id="baseUserMap" type="com.casit.entity.PO.User">
+		<id column="id" property="id" />
+		<result column="age" jdbcType="INTEGER" property="userage" />
+		<result column="username" jdbcType="VARCHAR"
+			property="username" />
+		<result column="password" jdbcType="VARCHAR"
+			property="password" />
+	</resultMap>
+
+	<!-- 嵌套结果 many to 1 一个SQL完事 引用CoprMapper里的resultMap -->
+	<resultMap id="userWithCorp" extends="baseUserMap"
+		type="com.casit.entity.PO.User">
+		<association property="corp" column="corp"
+			javaType="com.casit.entity.PO.Corp"
+			resultMap="com.casit.dao.CorpMapper.corpBaseMap">
+		</association>
+	</resultMap>
+
+	<!-- 嵌套查询 many to 1 每次单表查询 懒加载 -->
+	<resultMap id="userWithCorp2" extends="baseUserMap"
+		type="com.casit.entity.PO.User">
+		<!-- column 表示 参数列 -->
+		<association property="corp" column="corp"
+			fetchType="lazy" javaType="com.casit.entity.PO.Corp"
+			select="com.casit.dao.CorpMapper.getCorpByID">
+		</association>
+	</resultMap>
+
+
+
+	<!-- 嵌套查询 1toMany 每次单表查询 懒加载 -->
+	<resultMap id="userWithAddress2" extends="baseUserMap"
+		type="com.casit.entity.PO.User">
+		<!-- column 表示 参数列 -->
+		<collection property="adds" column="id" fetchType="lazy"
+			ofType="com.casit.entity.PO.ShipAddress"
+			select="com.casit.dao.ShipAddressMapper.selectByUserID"></collection>
+	</resultMap>
+
+	<!-- 嵌套结果 1 to Many -->
+	<resultMap id="userWithAddress"
+		type="com.casit.entity.PO.User" extends="baseUserMap">
+		<collection property="adds" ofType="ShipAddress"
+			resultMap="com.casit.dao.ShipAddressMapper.addressResultMap"></collection>
+	</resultMap>
+
+
+	<select id="getSingleUserByid" resultMap="baseUserMap">
+		select
+		<include refid="selectColumn" />
+		from t_user
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="age != null">
+				and age > #{age}
+			</if>
+		</where>
+		limit 1
+	</select>
+
+	<!-- 嵌套结果 many to 1 一个SQL完事 -->
+	<select id="getSingleUserAndCorpByid" resultMap="userWithCorp">
+		select
+		<include refid="selectColumn"></include>
+		, c.*
+		from t_user u join t_corp c on u.corp = c.corp_id where u.id
+		=#{id}
+	</select>
+
+	<!-- 嵌套查询 many to 1 每次单表查询 懒加载 -->
+	<select id="getSingleUserAndCorpByid2" resultMap="userWithCorp2">
+		select
+		<include refid="selectColumn"></include>
+		,corp
+		from t_user u where u.id =#{id}
+	</select>
+	
+<!-- 嵌套查询 1toMany -->
+	<select id="getSingleUserAndShipAddByid"
+		resultMap="userWithAddress">
+		select
+		U.id, U.age,
+		U.username,U.password,S.address_id,S.address
+		from
+		t_user U
+		left outer join t_shipaddress S on U.id = S.user_id
+		<where>
+			<if test="id!=null">
+				U.id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<!-- 嵌套查询 1toMany 每次单表查询 懒加载 -->
+	<select id="getSingleUserAndShipAddByid2"
+		resultMap="userWithAddress2">
+		select
+		<include refid="selectColumn"></include>
+		from t_user u where u.id =#{id}
+	</select>
+
+	<!-- foreach test -->
+	<select id="getUsersByCorps" resultMap="baseUserMap">
+		select
+		<include refid="selectColumn" />
+		from t_user
+		where corp in
+		<foreach collection="list" open="(" close=")" index="index"
+			item="corp" separator=",">
+			#{corp.corpID}
+		</foreach>
+	</select>
+
+	<update id="updateUser" parameterType="com.casit.entity.PO.User">
+		update t_user
+		<set>
+			<if test="userage != null">
+				age = #{userage},
+			</if>
+			<if test="username != null">
+				username = #{username},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="corp != null">
+				corp = #{corp.corpID}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<insert id="insert" parameterType="com.casit.entity.PO.User"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		t_user(age,username,password,corp)
+		values(#{userage},#{username},#{password},#{corp.corpID})
+	</insert>
+
+	<insert id="insert2" parameterType="com.casit.entity.PO.User">
+		insert into
+		t_user(age,username,password,corp)
+		values(#{userage},#{username},#{password},#{corp.corpID})
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+
+</mapper>
