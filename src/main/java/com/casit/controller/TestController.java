@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Level;
@@ -133,7 +134,10 @@ public class TestController {
 	}
 	//使用异步调用副线程 可以提高tomcat并发量
 	@RequestMapping(value = "/testAsync.do")
-	public String testAsync() throws Exception {
+	public String testAsync(HttpServletResponse resp,HttpServletRequest req) throws Exception {
+		
+		System.out.println(req.getSession().getId());
+		
 
 		
 		System.out.println(Thread.currentThread() + "———main主线程—————begin");

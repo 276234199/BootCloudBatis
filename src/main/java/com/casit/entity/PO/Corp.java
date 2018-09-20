@@ -12,16 +12,22 @@ import java.util.List;
 public class Corp  extends BaeEntity{
 	
 	private static final long serialVersionUID = -588783201047048125L;
-	private Integer corpID;
+	private Integer corpId;
 	private String corpName;
 	
 	private List<User> users;
 	
-	public Integer getCorpID() {
-		return corpID;
+	
+
+	@Override
+	public String toString() {
+		return "Corp [corpId=" + corpId + ", corpName=" + corpName + ", users=" + users + "]";
 	}
-	public void setCorpID(Integer corpID) {
-		this.corpID = corpID;
+	public Integer getCorpId() {
+		return corpId;
+	}
+	public void setCorpId(Integer corpId) {
+		this.corpId = corpId;
 	}
 	public String getCorpName() {
 		return corpName;
@@ -35,10 +41,7 @@ public class Corp  extends BaeEntity{
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	@Override
-	public String toString() {
-		return "Corp [corpID=" + corpID + ", corpName=" + corpName + ", users=" + users + "]";
-	}
+
 	
 	
 	

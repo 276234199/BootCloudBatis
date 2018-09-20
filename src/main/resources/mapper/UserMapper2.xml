@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.casit.dao.UserMapper2">
 
+<!-- <cache eviction="LRU" flushInterval="60000" size="512" readOnly="true" /> -->
+
 	<sql id="selectColumn">
 		id,age,username,password
 	</sql>
@@ -36,6 +38,15 @@
 
 
 
+
+	<!-- 嵌套结果 1 to Many -->
+	<resultMap id="userWithAddress"
+		type="com.casit.entity.PO.User" extends="baseUserMap">
+		<collection property="adds" ofType="ShipAddress"
+			resultMap="com.casit.dao.ShipAddressMapper.addressResultMap"></collection>
+	</resultMap>
+
+
 	<!-- 嵌套查询 1toMany 每次单表查询 懒加载 -->
 	<resultMap id="userWithAddress2" extends="baseUserMap"
 		type="com.casit.entity.PO.User">
@@ -45,12 +56,21 @@
 			select="com.casit.dao.ShipAddressMapper.selectByUserID"></collection>
 	</resultMap>
 
-	<!-- 嵌套结果 1 to Many -->
-	<resultMap id="userWithAddress"
-		type="com.casit.entity.PO.User" extends="baseUserMap">
-		<collection property="adds" ofType="ShipAddress"
-			resultMap="com.casit.dao.ShipAddressMapper.addressResultMap"></collection>
+	<!-- 嵌套结果 many to Many -->
+	<resultMap id="userWithRole" type="com.casit.entity.PO.User"
+		extends="baseUserMap">
+		<collection property="roles"
+			ofType="com.casit.entity.PO.Role"
+			resultMap="com.casit.dao.RoleMapper.BaseResultMap"></collection>
 	</resultMap>
+
+	<!-- 嵌套查询  many to Many -->
+	<resultMap id="userWithRole2" type="com.casit.entity.PO.User"
+		extends="baseUserMap">
+		<collection property="roles" column="id" fetchType="lazy"
+			ofType="com.casit.entity.PO.Role" select="selectRoleByUser"></collection>
+	</resultMap>
+
 
 
 	<select id="getSingleUserByid" resultMap="baseUserMap">
@@ -84,8 +104,8 @@
 		,corp
 		from t_user u where u.id =#{id}
 	</select>
-	
-<!-- 嵌套查询 1toMany -->
+
+	<!-- 嵌套结果 1toMany -->
 	<select id="getSingleUserAndShipAddByid"
 		resultMap="userWithAddress">
 		select
@@ -109,6 +129,41 @@
 		from t_user u where u.id =#{id}
 	</select>
 
+	<!-- 嵌套结果 many to Many -->
+	<select id="getUserWithRolesByid" resultMap="userWithRole">
+		select
+		U.id, U.age,
+		U.username,U.password,R.role_id,R.role_name
+		from
+		t_user U
+		left
+		outer join
+		t_user_role UR on UR.user_id = U.id
+		left outer join
+		t_role R
+		on R.role_id
+		= UR.role_id
+		where
+		U.id = #{id}
+	</select>
+
+	<!-- 嵌套查询 单表 懒加载 many to Many -->
+	<select id="getUserWithRolesByid2" resultMap="userWithRole2">
+		select
+		<include refid="selectColumn"></include>
+		from t_user
+		where id = #{id}
+	</select>
+
+
+	<select id="selectRoleByUser"
+		resultMap="com.casit.dao.RoleMapper.BaseResultMap">
+		select r.role_id,r.role_name 
+		from t_role r join t_user_role ur 
+		on ur.role_id = r.role_id 
+		where ur.user_id = #{id}
+	</select>
+
 	<!-- foreach test -->
 	<select id="getUsersByCorps" resultMap="baseUserMap">
 		select
@@ -117,7 +172,7 @@
 		where corp in
 		<foreach collection="list" open="(" close=")" index="index"
 			item="corp" separator=",">
-			#{corp.corpID}
+			#{corp.corpId}
 		</foreach>
 	</select>
 
@@ -134,7 +189,7 @@
 				password = #{password},
 			</if>
 			<if test="corp != null">
-				corp = #{corp.corpID}
+				corp = #{corp.corpId}
 			</if>
 		</set>
 		where id = #{id}
@@ -144,13 +199,13 @@
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		t_user(age,username,password,corp)
-		values(#{userage},#{username},#{password},#{corp.corpID})
+		values(#{userage},#{username},#{password},#{corp.corpId})
 	</insert>
 
 	<insert id="insert2" parameterType="com.casit.entity.PO.User">
 		insert into
 		t_user(age,username,password,corp)
-		values(#{userage},#{username},#{password},#{corp.corpID})
+		values(#{userage},#{username},#{password},#{corp.corpId})
 		<selectKey keyProperty="id" order="AFTER"
 			resultType="java.lang.Integer">
 			SELECT LAST_INSERT_ID()

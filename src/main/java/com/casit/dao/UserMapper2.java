@@ -2,7 +2,6 @@ package com.casit.dao;
 
 import com.casit.entity.PO.Corp;
 import com.casit.entity.PO.User;
-import com.casit.entity.PO.UserExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -27,6 +26,12 @@ public interface UserMapper2 {
 	
 	//嵌套结果 1 to many
 	User getSingleUserAndShipAddByid(@Param("id") Integer id);
+	
+	//嵌套结果 many to many
+	User getUserWithRolesByid(@Param("id") Integer id);
+	
+	//单表查询lazy many to many
+	User getUserWithRolesByid2(@Param("id") Integer id);
 
 	User getUserByUsername(@Param("username") String username);
 
@@ -45,6 +50,8 @@ public interface UserMapper2 {
 	int updateUser(User user);
 	
 	List<User> getUsersByCorps(List<Corp> list);
+
+	
 
 
 }

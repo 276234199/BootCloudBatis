@@ -40,6 +40,10 @@ spring:
                 acknowledge-mode: manual
     application :
         name : dubbo-provider-demo
+    servlet :             
+        multipart :                           # file upload
+             maxFileSize  :  50Mb
+             maxRequestSize : 50Mb
 
 dubbo :
     application:

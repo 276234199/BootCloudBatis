@@ -3,7 +3,7 @@
 <mapper namespace="com.casit.dao.CorpMapper">
 
 	<resultMap id="corpBaseMap" type="com.casit.entity.PO.Corp">
-		<id property="corpID" column="corp_id" />
+		<id property="corpId" column="corp_id" />
 		<result property="corpName" column="corp_name" />
 	</resultMap>
 

@@ -25,9 +25,8 @@ public abstract class BaeEntity implements Serializable{
 	}
 
 	public String toJsonByJackson() throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 //		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-//		mapper.setSerializationInclusion(Include.NON_NULL);
 		return mapper.writeValueAsString(this);
 	}
 

@@ -1,6 +1,7 @@
 package com.casit.entity.PO;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Role  extends BaeEntity{
     /**
@@ -19,6 +20,8 @@ public class Role  extends BaeEntity{
      * @mbg.generated * 表字段 : t_role.role_name
      */
     private String roleName;
+    
+    private List<User> user;
 
     /**
      * @mbg.generated * 获取  字段:t_role.role_id
@@ -55,4 +58,19 @@ public class Role  extends BaeEntity{
     public void setRoleName(String roleName) {
         this.roleName = roleName == null ? null : roleName.trim();
     }
+
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", user=" + user + "]";
+	}
+    
+    
 }
