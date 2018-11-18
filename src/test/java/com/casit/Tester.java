@@ -3,6 +3,8 @@ package com.casit;
 public class Tester {
 
 	public static void main(String[] args) {
+	
+		
 		// getBoo()未执行
 		if (getBoo2() && getBoo()) {
 			System.out.println("ccc");

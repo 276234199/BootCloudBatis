@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-//弃用WebMvcConfigurerAdapter，直接实现WebMvcConfigurer接口
+//弃用extends WebMvcConfigurerAdapter，直接实现WebMvcConfigurer接口
 public class InterceptorConfig  implements WebMvcConfigurer{
 	
 	@Override

@@ -16,6 +16,8 @@ public class DiskClassLoader extends ClassLoader {
         mLibPath = path;
     }
 
+    //此处可以进行加密解密   
+    //自定义类加载器 覆盖这个方法
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         // TODO Auto-generated method stub

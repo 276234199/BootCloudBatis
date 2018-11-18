@@ -2,7 +2,8 @@ package com.casit;
 
 /**
  * 懒汉单例
- *
+ * 线程安全 由虚拟机保证 
+ * 推荐使用
  */
 public class SingleInstance {
 	

@@ -13,17 +13,18 @@ public class DiskClassLoaderTest {
         // TODO Auto-generated method stub
 
         //创建自定义classloader对象。
-        DiskClassLoader diskLoader = new DiskClassLoader("D:\\lib");
+        DiskClassLoader diskLoader = new DiskClassLoader("D:\\localLibs");
         try {
             //加载class文件
-            Class c = diskLoader.loadClass("com.frank.test.Test");
+            Class<?> c = diskLoader.loadClass("com.google.gson.JsonObject");
 
             if(c != null){
                 try {
                     Object obj = c.newInstance();
-                    Method method = c.getDeclaredMethod("say",null);
-                    //通过反射调用Test类的say方法
-                    method.invoke(obj, null);
+                    System.out.println(c.getDeclaredMethods());
+                    Method method = c.getDeclaredMethod("size");
+                    //通过反射调用size()
+                    System.out.println(method.invoke(obj));
                 } catch (InstantiationException | IllegalAccessException 
                         | NoSuchMethodException
                         | SecurityException | 
