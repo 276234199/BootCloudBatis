@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.casit.dao.ShipAddressMapper;
 import com.casit.dao.ShipAddressMapperExtent;
@@ -123,6 +124,7 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(password);
 		user.setUserage(30);
         userMapperExtent.insert( user);
+//        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 
         //mybatis会自动将id赋到user对象上
 		return user;

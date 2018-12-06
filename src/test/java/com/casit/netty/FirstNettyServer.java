@@ -5,6 +5,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -40,6 +41,7 @@ public class FirstNettyServer {
 			boot.group(bossGroup,workerGroup)//配置线程组
 					.channel(NioServerSocketChannel.class)//配置nio通讯
 					.localAddress(port)//服务器端口
+					.childOption(ChannelOption.TCP_NODELAY, true)//配置
 					//接收到请求，启动一个SocketChannel通信
 					//SocketChannel中有一个handler处理事件
 					.childHandler(new ChannelInitializer<SocketChannel>() {

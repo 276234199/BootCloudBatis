@@ -33,6 +33,9 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter{
 		System.out.println("server accept : "+buf.toString(CharsetUtil.UTF_8));
 		//接收到什么 就返回什么 也可以改成其他的
 		ctx.write(buf);
+		
+//      池化的bytebuf
+//		ctx.alloc().buffer(initialCapacity)
 	}
 
 	@Override

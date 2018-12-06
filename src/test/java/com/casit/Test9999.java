@@ -1,6 +1,7 @@
 package com.casit;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
 * 类说明:
@@ -55,6 +56,9 @@ public class Test9999 {
 	}
 	
 	public static void main(String[] args) {
+		
+		System.out.println(UUID.randomUUID().toString());
+		
 		int[]  nums1 = {9,9,9,9};
 		System.out.println(Arrays.toString(plus1(nums1)));
 		int[]  nums2 = {3,9,9,9};
