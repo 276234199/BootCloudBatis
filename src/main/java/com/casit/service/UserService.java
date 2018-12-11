@@ -10,7 +10,7 @@ public interface UserService {
 	
 	String login(String username,String password) ;
 
-	User createUser(String username, String password) ;
+	User createUser(String username, String password) throws  Exception ;
 
 	void delUser(Integer id);
 

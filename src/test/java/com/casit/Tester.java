@@ -4,6 +4,9 @@ public class Tester {
 
 	public static void main(String[] args) {
 	
+		String a = "qqqaa";
+		System.out.println(a.replace("a", "b"));
+		System.out.println(a);
 		
 		// getBoo()未执行
 		if (getBoo2() && getBoo()) {

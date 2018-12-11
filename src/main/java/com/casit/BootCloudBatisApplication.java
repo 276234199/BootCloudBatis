@@ -41,11 +41,10 @@ public class BootCloudBatisApplication {
 	@Resource(name = "testUser")
 	public User user;
 	
-	@Autowired
 	public User testUser;
 	
 	@Test
-	public void testSth() {
+	public void testSth() throws Exception {
 		User u = userService.createUser("rua", "ruarurua");
 		System.out.println(u.getId()+"----------------------------");
 		System.out.println(testUser.getId()+"----------------------------");

@@ -117,17 +117,28 @@ public class UserServiceImpl implements UserService {
 		    }
 		)
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=RuntimeException.class)
-	public User createUser(String username, String password)  {
+	public User createUser(String username, String password) throws Exception  {
 
 		User user =  new User();
 		user.setUsername(username);
 		user.setPassword(password);
 		user.setUserage(30);
         userMapperExtent.insert( user);
-//        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+
+        throwException();
 
         //mybatis会自动将id赋到user对象上
 		return user;
+	}
+	
+	
+	private void throwException() throws Exception {
+		User user =  new User();
+		user.setUsername("1");
+		user.setPassword("2");
+		user.setUserage(30);
+        userMapperExtent.insert( user);
+		throw new Exception();
 	}
 	
 	@Override
@@ -154,6 +165,7 @@ public class UserServiceImpl implements UserService {
 		userMapperExtent.updateByid(user);
 		return userMapperExtent.getSingleUserByid(user.getId());
 	}
+
 
 	@Override
 	@Async
