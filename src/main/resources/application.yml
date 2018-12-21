@@ -42,6 +42,15 @@ spring:
                 acknowledge-mode: manual
             simple:
                 acknowledge-mode: manual
+    activemq:
+       user: admin    # 连接用户名
+       password: admin   # 连接密码
+       broker-url: tcp://localhost:61616 # 消息组件的连接主机信息
+       pool:        # 池化
+         enabled: true
+    jms:
+       listener:
+         acknowledge-mode: CLIENT
     application :
         name : dubbo-provider-demo
     servlet :             

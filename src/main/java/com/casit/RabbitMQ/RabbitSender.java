@@ -6,6 +6,12 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 
+ * @author zhouhai
+ * 带回调和通知的-------sender
+ *
+ */
 @Component
 public class RabbitSender implements RabbitTemplate.ReturnCallback , RabbitTemplate.ConfirmCallback{
 

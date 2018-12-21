@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.casit.activemq.ActivemqProducer;
 import com.casit.entity.PO.User;
 import com.casit.service.RabbitmqService;
 import com.casit.service.UserService;
@@ -48,6 +49,7 @@ public class TestController {
 		logger.error(e.getClass().getName() + ": " + e.getLocalizedMessage(),e);
 		return e.getLocalizedMessage();
 	}
+	
 
 	// http://localhost:8080/hello/hello.do
 	@RequestMapping(value = "/hello.do")
@@ -91,12 +93,21 @@ public class TestController {
 		return userService.updateUser(user).toJsonByGson();
 	}
 
-	// http://localhost:8080/hello/sendToQueue.do
+	// http://localhost:8080/hello/sendToQueue.do?content=qqqqqq
 	@RequestMapping(value = "/sendToQueue.do")
 	@ApiOperation(httpMethod = "GET", value = "snedToQueue")
 	public String sendToQueue(String content) throws Exception {
 		rabbitmqService.snedToQueue(content);
 		return "";
+	}
+	
+	@Autowired
+	ActivemqProducer producer;
+	
+	@RequestMapping(value = "/testActivemq")
+	public String testActivemq(String msg) throws Exception {
+		producer.sendMsg(msg);
+		return "done";
 	}
 
 	
@@ -146,4 +157,6 @@ public class TestController {
 		return userService.testAsync().get();
 		
 	}
+	
+	
 }

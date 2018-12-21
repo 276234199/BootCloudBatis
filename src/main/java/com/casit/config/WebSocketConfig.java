@@ -12,7 +12,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @author ASUS
  *
  */
-@Configuration
+//@Configuration
 public class WebSocketConfig implements WebMvcConfigurer {
 
 	@Override

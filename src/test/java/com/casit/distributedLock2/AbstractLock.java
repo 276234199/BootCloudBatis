@@ -6,7 +6,7 @@ package com.casit.distributedLock2;
 */
 public abstract class AbstractLock implements Lock{
 	
-    public void lock() {
+    public final void lock() {
         if (tryLock()) {
         	
         } else {
@@ -17,7 +17,7 @@ public abstract class AbstractLock implements Lock{
         }
 	}
     
-    public void unlock() {
+    public final void unlock() {
         releaseLock();
 	}
     

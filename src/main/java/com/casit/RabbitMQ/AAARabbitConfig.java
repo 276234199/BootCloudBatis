@@ -13,12 +13,37 @@ import org.springframework.context.annotation.Configuration;
 public class AAARabbitConfig {
 	
 
+	//直接发送到这个队列可以 不用exchange
 	@Bean
 	public Queue helloQueue() {
 		return new Queue("hello");
 	}
 	
+	
+	// ===============以下是验证direct Exchange的队列==========
+	@Bean
+	public Queue userQueue() {
+		Queue queue = new Queue("userQueue");
+		return queue;
+	}
+	
+	@Bean
+	public DirectExchange  directExchange() {
+		DirectExchange de = new  DirectExchange("directExchange");
+		return de;
+	}
 
+	@Bean
+	//参数userQueue 与 方法 userQueue() 名称相同 因此可以注入到 userQueue
+	Binding bindingDirectExchange(Queue userQueue, DirectExchange directExchange) {
+		return BindingBuilder.bind(userQueue).to(directExchange).with("xiaohubi");
+	}
+	
+	@Bean
+	//参数userQueue 与 方法 userQueue() 名称相同 因此可以注入到 userQueue
+	Binding bindingDirectExchange2(Queue userQueue, DirectExchange directExchange) {
+		return BindingBuilder.bind(userQueue).to(directExchange).with("dahubi");
+	}
 
 
 	// ===============以下是验证topic Exchange的队列==========
@@ -51,15 +76,10 @@ public class AAARabbitConfig {
 	// ===============以上是验证Fanout Exchange的队列==========
 
 	@Bean
-	TopicExchange exchange() {
-		return new TopicExchange("exchange");
+	TopicExchange topicExchange() {
+		return new TopicExchange("topicExchange");
 	}
-
-	@Bean
-	FanoutExchange fanoutExchange() {
-		return new FanoutExchange("fanoutExchange");
-	}
-
+	
 	/**
 	 * 将队列topic.message与exchange绑定，binding_key为topic.message,就是完全匹配
 	 * 
@@ -69,7 +89,7 @@ public class AAARabbitConfig {
 	 */
 	@Bean
 	Binding bindingExchangeMessage(Queue messageQueue, TopicExchange exchange) {
-		return BindingBuilder.bind(messageQueue).to(exchange).with("topic.message");
+		return BindingBuilder.bind(messageQueue).to(exchange).with("topic.#");
 	}
 
 	/**
@@ -80,10 +100,17 @@ public class AAARabbitConfig {
 	 * @return
 	 */
 	@Bean
-	Binding bindingExchangeMessages(Queue errorQueue, TopicExchange exchange) {
-		return BindingBuilder.bind(errorQueue).to(exchange).with("topic.#");
+	Binding bindingExchangeMessages(Queue errorQueue, TopicExchange topicExchange) {
+		return BindingBuilder.bind(errorQueue).to(topicExchange).with("topic.error");
 	}
+	
+	//======================================================================================
 
+	@Bean
+	FanoutExchange fanoutExchange() {
+		return new FanoutExchange("fanoutExchange");
+	}
+	
 	@Bean
 	Binding bindingExchangeA(Queue AMessage, FanoutExchange fanoutExchange) {
 		return BindingBuilder.bind(AMessage).to(fanoutExchange);
@@ -98,21 +125,6 @@ public class AAARabbitConfig {
 	Binding bindingExchangeC(Queue CMessage, FanoutExchange fanoutExchange) {
 		return BindingBuilder.bind(CMessage).to(fanoutExchange);
 	}
-	
-	// ===============以下是验证direct Exchange的队列==========
-	@Bean
-	public Queue userQueue() {
-		return new Queue("userQueue");
-	}
-	
-	@Bean
-	public DirectExchange  directExchange() {
-		return new  DirectExchange("directExchange");
-	}
-	
-	@Bean
-	Binding bindingDirectExchange(Queue userQueue, DirectExchange directExchange) {
-		return BindingBuilder.bind(userQueue).to(directExchange).with("userQueueBindKey");
-	}
+
 
 }

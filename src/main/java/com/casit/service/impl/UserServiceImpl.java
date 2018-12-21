@@ -30,7 +30,7 @@ import com.casit.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-@Service("userService")
+//@Service("userService")
 @com.alibaba.dubbo.config.annotation.Service(
         version = "1.0.0",
         application = "${dubbo.application.id}",

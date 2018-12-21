@@ -8,12 +8,6 @@ import com.casit.RabbitMQ.RabbitSender;
 import com.casit.service.RabbitmqService;
 import com.casit.service.UserService;
 @Service("rabbitService")
-@com.alibaba.dubbo.config.annotation.Service(
-        version = "1.0.0",
-        application = "${dubbo.application.id}",
-        protocol = "${dubbo.protocol.id}",
-        registry = "${dubbo.registry.id}"
-)
 public class RabbitmqServiceImpl implements RabbitmqService{
 	
 	@Autowired
@@ -24,12 +18,23 @@ public class RabbitmqServiceImpl implements RabbitmqService{
 
 	@Override
 	public void snedToQueue(String content) {
-		rabbitTemplate.convertAndSend("hello", content);
-		rabbitTemplate.convertAndSend("exchange", "topic.message", content);
-		rabbitTemplate.convertAndSend("exchange", "topic.sdfdsfdsfdsf", content+"#");
-		rabbitTemplate.convertAndSend("fanoutExchange", "asdkjsdfkl", content+" fanout");
+
+//		rabbitSender.send("directExchange", "userQueueBindKey", content);
 		
-		rabbitSender.send("directExchange", "userQueueBindKey", content);
+		rabbitTemplate.convertAndSend("directExchange", "lalala", content+111111111+"--");
+		rabbitTemplate.convertAndSend("directExchange", "dahubi", content+22222222+"--");
+		rabbitTemplate.convertAndSend("directExchange", "xiaohubi", content+333333+"--");
+		
+		//广播
+		rabbitTemplate.convertAndSend("fanoutExchange", "asdkjsdfkl", content+"-6666---- fanout");
+		
+		//直接发送到hello这个queue
+		rabbitTemplate.convertAndSend("hello", content+"直接就到queue");
+		
+		rabbitTemplate.convertAndSend("topicExchange", "topic.error", content+4444444+"--");
+		rabbitTemplate.convertAndSend("topicExchange", "topic.sdfdsfdsfdsf", content+55555555+"--");
+		
+		
 		
 	}
 
