@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,6 @@ public class UserServiceImpl implements UserService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	
 	@Caching(
 		    cacheable = {
 		       @Cacheable(value = "login2", key = "'user_'+#username+#password"),
@@ -174,6 +174,14 @@ public class UserServiceImpl implements UserService {
 		Thread.sleep(2000);
 		System.out.println(Thread.currentThread() + "———Async副线程—————end");
 		return new AsyncResult<String>("task1执行完毕");
+	}
+
+	@Autowired
+	KafkaTemplate<String, String> kafkaTemplate;
+	
+	@Override
+	public void testKafka(String test) {
+		kafkaTemplate.send("hellokafka", "aaa", test);
 	}
 	
 

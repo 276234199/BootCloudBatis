@@ -10,14 +10,12 @@ import org.springframework.stereotype.Component;
 import com.rabbitmq.client.Channel;
 
 @Component
-@RabbitListener(queues = "userQueue")
-public class DirectExchangeConsumer {
+@RabbitListener(queues = "messageQueue2")
+public class TopicConsumer2 {
+
 	@RabbitHandler
     public void process(String hello,Channel channel, Message message) throws IOException {
-        System.out.println("DirectExchangeConsumer1  userQueue|||Receive content : " + hello 
-        		+"  |!bindingkey:"+message.getMessageProperties().getReceivedRoutingKey()
-        		+"  |exchange:"+message.getMessageProperties().getReceivedExchange()
-        		+"   |queue:"+message.getMessageProperties().getConsumerQueue());
+        System.out.println("messageQueue2|||Receive content : " + hello);
         channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);  
     }
 }

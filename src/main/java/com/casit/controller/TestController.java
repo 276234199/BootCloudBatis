@@ -79,7 +79,7 @@ public class TestController {
 		return "success";
 	}
 
-	// http://localhost:8080/hello/get.do
+	// http://localhost:8080/hello/get.do?id=132456
 	@RequestMapping(value = "/get.do")
 	@ApiOperation(httpMethod = "GET", value = "getUser")
 	public String getUser(Integer id) throws Exception {
@@ -143,6 +143,17 @@ public class TestController {
 
 		return mapper.writeValueAsString(list);
 	}
+	
+	// http://localhost:8080/hello/testKafka.do?test=qqqqqq
+	@RequestMapping(value = "/testKafka.do")
+	@ApiOperation(httpMethod = "GET", value = "testKafka")
+	public String testKafka(String test) throws Exception {
+		userService.testKafka(test);
+
+		return test;
+
+	}
+	
 	//使用异步调用副线程 可以提高tomcat并发量
 	@RequestMapping(value = "/testAsync.do")
 	public String testAsync(HttpServletResponse resp,HttpServletRequest req) throws Exception {

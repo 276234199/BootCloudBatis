@@ -1,4 +1,4 @@
-package com.casit.config.activemq;
+package com.casit.activemq;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
@@ -19,8 +19,6 @@ import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MessageConverter;
-
-import com.casit.activemq.ClientAckJmsTemplate;
 
 /**
  * 类说明:Activemq配置文件

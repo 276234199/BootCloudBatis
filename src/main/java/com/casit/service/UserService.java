@@ -23,4 +23,6 @@ public interface UserService {
 
 	Future<String> testAsync() throws InterruptedException;
 
+	void testKafka(String test);
+
 }
