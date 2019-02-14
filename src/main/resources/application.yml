@@ -70,6 +70,11 @@ spring:
               max-wait: 1
               max-idle: 8
               min-idle: 0    
+    data:
+      mongodb:
+        uri: mongodb://localhost:27017/test
+        username: test
+        password: 123456
 dubbo :
     application:
         id: dubbo-provider-demo

@@ -18,7 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.casit.RabbitMQ.RabbitSender;
+import com.casit.dao.mongo.PlayeMongoDao;
 import com.casit.entity.PO.User;
+import com.casit.entity.mongo.Player;
 import com.casit.service.UserService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -48,11 +50,20 @@ public class BootCloudBatisApplication {
 	@Autowired
 	RabbitSender rabbitSender;	
 	
+	@Autowired
+	PlayeMongoDao playeMongoDao;
+	
 	@Test
 	public void testSth() throws Exception {
 //		User u = userService.createUser("rua", "ruarurua");
 //		System.out.println(u.getId()+"----------------------------");
-		rabbitTemplate.convertAndSend("queque", "???????");
+//		rabbitTemplate.convertAndSend("queque", "???????");
+		System.out.println("-------------????????????????????---------------");
+		Player p = new Player();
+		p.setCount(333338);
+		p.setName("sdfjhsdkhfsdf");
+		playeMongoDao.save(p);
+		System.out.println(p.getPlayerId());
 		
 	}
 

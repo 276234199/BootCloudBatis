@@ -7,15 +7,18 @@ import java.util.Map;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -28,8 +31,26 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import redis.clients.jedis.JedisPoolConfig;
+
 @Configuration
 public class RedisConfig {
+	
+	@Bean
+    @ConfigurationProperties(prefix="spring.redis")
+    public JedisPoolConfig getRedisConfig(){
+        JedisPoolConfig config = new JedisPoolConfig();
+        return config;
+    }
+	
+	@Bean
+	@Scope(scopeName = "prototype")
+	@ConfigurationProperties(prefix="spring.redis")
+    public JedisConnectionFactory jedisConnectionFactory() {
+		JedisPoolConfig config = getRedisConfig();
+		JedisConnectionFactory factory = new JedisConnectionFactory(config);
+		return factory;
+    }
 
 	@Bean
 	@ConditionalOnMissingBean(name = "redisTemplate")
