@@ -53,6 +53,8 @@ public class BootCloudBatisApplication {
 	@Autowired
 	PlayeMongoDao playeMongoDao;
 	
+
+	
 	@Test
 	public void testSth() throws Exception {
 //		User u = userService.createUser("rua", "ruarurua");
@@ -64,7 +66,10 @@ public class BootCloudBatisApplication {
 		p.setName("sdfjhsdkhfsdf");
 		playeMongoDao.save(p);
 		System.out.println(p.getPlayerId());
-		
+		Player p2 = new Player();
+		p2.setCount(9090950);
+		p2.setName("liuqiangdogn");
+//		playeMongoDao2.save(p2);
 	}
 
 	

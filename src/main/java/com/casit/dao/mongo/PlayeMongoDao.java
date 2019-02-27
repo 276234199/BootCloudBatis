@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,7 @@ import com.casit.entity.mongo.Player;
 * @version 创建时间：2019年2月14日 上午10:19:39
 */
 @Component
-public class PlayeMongoDao implements MongoRepository<Player, Long>{
+public class PlayeMongoDao implements MongoRepository<Player, String>{
 	
 	@Autowired
     private MongoTemplate mongoTemplate;
@@ -28,6 +30,9 @@ public class PlayeMongoDao implements MongoRepository<Player, Long>{
 	@Override
 	public Page<Player> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
+		Query query = Query.query(Criteria.where("count").gte(0)).with(new Sort(Sort.Direction.DESC,"count")).limit(50).skip(0);
+		query.fields().include("name").include("count");
+		mongoTemplate.find(query, Player.class);
 		return null;
 	}
 
@@ -38,19 +43,19 @@ public class PlayeMongoDao implements MongoRepository<Player, Long>{
 	}
 
 	@Override
-	public Optional<Player> findById(Long id) {
+	public Optional<Player> findById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean existsById(Long id) {
+	public boolean existsById(String id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Iterable<Player> findAllById(Iterable<Long> ids) {
+	public Iterable<Player> findAllById(Iterable<String> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,7 +67,7 @@ public class PlayeMongoDao implements MongoRepository<Player, Long>{
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(String id) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -150,5 +155,6 @@ public class PlayeMongoDao implements MongoRepository<Player, Long>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
